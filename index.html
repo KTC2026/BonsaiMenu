@@ -3,59 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าเว็บทดสอบของฉัน</title>
+    <title>Bonsai Menu - เมนูอาหารญี่ปุ่น</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            padding-bottom: 50px;
+        }
+
+        /* หัวข้อเว็บ */
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        header h1 {
+            color: #c0392b;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        /* แถบ Tab เลือกเมนูด้านบน */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            background-color: #ffffff;
+            margin-top: 2px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn {
+            flex: 1;
+            max-width: 200px;
+            padding: 15px 0;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #7f8c8d;
+            cursor: pointer;
+            text-align: center;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #c0392b;
+            border-bottom: 3px solid #c0392b;
+        }
+
+        /* โครงสร้างแสดงรายการอาหาร */
+        .menu-content {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: none; /* ซ่อนไว้ก่อน แล้วใช้ JS สลับให้แสดง */
+        }
+
+        .menu-content.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* การ์ดเมนูอาหาร */
+        .menu-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-img {
+            width: 100%;
+            height: 200px;
+            background-color: #eaedd0; /* สีพื้นหลังสมมุติแทนรูปภาพ */
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-        }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 90%;
-        }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        p {
             color: #7f8c8d;
-            font-size: 16px;
-            line-height: 1.6;
+            font-weight: bold;
         }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 24px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: background 0.3s;
+
+        .menu-info {
+            padding: 20px;
         }
-        .btn:hover {
-            background-color: #2980b9;
+
+        .menu-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #2c3e50;
         }
+
+        .menu-detail {
+            font-size: 14px;
+            color: #95a5a6;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .menu-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        /* จัดการให้รูปภาพอยู่ในกรอบพิกเซลหรือขนาดที่กำหนดพอดี */
+        .menu-img img {
+            width: 100%;          /* บังคับความกว้างเท่ากรอบ */
+            height: 100%;         /* บังคับความสูงเท่ากรอบ */
+            object-fit: cover;    /* ตัดสัดส่วนภาพให้เต็มกรอบโดยภาพไม่เบี้ยว */
+            display: block;       /* ตัดช่องว่างใต้รูปภาพ */
+        }
+
+        /* ตัดส่วนโค้งมนให้รูปภาพไม่ล้นมุมกล่องออกมา */
+        .menu-img {
+            overflow: hidden;     /* รูปจะโค้งตามมุมกล่องสีเขียว */
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>สวัสดีโลก! 👋</h1>
-        <p>ยินดีด้วย! หน้าเว็บทดสอบเบื้องต้นของคุณทำงานได้สำเร็จแล้ว ตอนนี้ระบบพร้อมใช้งานบน GitHub Pages ของคุณ</p>
-        <a href="#" class="btn" onclick="alert('ยินดีด้วย โค้ดปุ่มทำงานปกติครับ!')">คลิกทดสอบระบบ</a>
+    <!-- หัวข้อหน้าเว็บ -->
+    <header>
+        <h1>Bonsai Japanese Restaurant</h1>
+        <p>เมนูอาหารสดใหม่ คัดสรรวัตถุดิบพรีเมียมทุกวัน</p>
+    </header>
+
+    <!-- ปุ่ม Tab สำหรับเลือกหมวดหมู่ -->
+    <div class="tab-container">
+        <button class="tab-btn active" onclick="openMenu(event, 'sushi')">🍣 ซูชิ (Sushi)</button>
+        <button class="tab-btn" onclick="openMenu(event, 'donburi')">🍚 ดงบุริ (Donburi)</button>
     </div>
+
+    <!-- โซนเมนูซูชิ -->
+    <div id="sushi" class="menu-content active">
+        <div class="menu-card">
+            <div class="menu-img">รูปภาพแซลมอนซูชิ</div>
+            <div class="menu-info">
+                <div class="menu-title">Salmon Sushi</div>
+                <div class="menu-detail">ซูชิหน้าปลาแซลมอนสดนำเข้าจากนอร์เวย์ เนื้อหวานละมุนลิ้น</div>
+                <div class="menu-price">60 บาท</div>
+            </div>
+        </div>
+        <div class="menu-card">
+            <div class="menu-img">รูปภาพทูน่าซูชิ</div>
+            <div class="menu-info">
+                <div class="menu-title">Maguro Sushi</div>
+                <div class="menu-detail">ซูชิหน้าปลาทูน่าเนื้อแดงสด ไร้ไขมัน รสชาติเข้มข้นเต็มคำ</div>
+                <div class="menu-price">75 บาท</div>
+            </div>
+        </div>
+        <div class="menu-card">
+            <div class="menu-img">รูปภาพซูชิไข่หวาน</div>
+            <div class="menu-info">
+                <div class="menu-title">Tamago Sushi</div>
+                <div class="menu-detail">ซูชิหน้าไข่หวานย่างสูตรดั้งเดิม หอมกลิ่นซุปดาชิ รสกลมกล่อม</div>
+                <div class="menu-price">40 บาท</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- โซนเมนูดงบุริ -->
+    <div id="donburi" class="menu-content">
+        <div class="menu-card">
+            <div class="menu-img"><img src="img/donburi/dong_01.png" alt="ข้าวหน้าไก่เทริยากิ"></div>
+            <div class="menu-info">
+                <div class="menu-title">Tori no Teriyaki-don</div>
+                <div class="menu-title">鳥の照り焼き丼</div>
+                <div class="menu-detail">ข้าวหน้าไก่เทริยากิ สไตร์ญี่ปุ่น</div>
+                <div class="menu-price">69 บาท</div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <div class="menu-img"><img src="img/donburi/dong_02.png" alt="ข้าวหน้าเนื้อ"></div>
+            <div class="menu-info">
+                <div class="menu-title">Gyudon</div>
+                <div class="menu-title">ぎゅうどん</div>                           
+                <div class="menu-detail">ข้าวหน้าเนื้อสไลด์ต้มซอสญี่ปุ่นรสเข้มข้น</div>
+                <div class="menu-price">79 บาท</div>
+            </div>
+        </div>
+
+        <div class="menu-card">
+            <div class="menu-img"><img src="img/donburi/dong_03.png" alt="ข้าวหน้าไก่กับไข่"></div>
+            <div class="menu-info">
+                <div class="menu-title">Oyako Don</div>
+                <div class="menu-title">親子丼</div> 
+                <div class="menu-detail">ข้าวหน้าไก่กับไข่ อาหารง่ายๆสไตร์ครอบครัว</div>
+                <div class="menu-price">ุ69 บาท</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- สคริปต์ JavaScript สำหรับสลับหน้า Tab -->
+    <script>
+        function openMenu(evt, menuName) {
+            // ซ่อนเมนูทั้งหมดก่อน
+            var menuContent = document.getElementsByClassName("menu-content");
+            for (var i = 0; i < menuContent.length; i++) {
+                menuContent[i].classList.remove("active");
+            }
+
+            // เอาคลาส active ออกจากปุ่มทั้งหมด
+            var tabBtns = document.getElementsByClassName("tab-btn");
+            for (var i = 0; i < tabBtns.length; i++) {
+                tabBtns[i].classList.remove("active");
+            }
+
+            // แสดงเมนูที่เลือก และเปลี่ยนปุ่มที่กดให้เป็น active
+            document.getElementById(menuName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
 
 </body>
 </html>

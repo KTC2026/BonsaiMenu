@@ -241,8 +241,8 @@
         <button class="tab-btn" onclick="openMenu(event, 'Promotion')">📌 โปรโมชั่น </button>
         <button class="tab-btn active" onclick="openMenu(event, 'sushi')">🍣 ซูชิ / 🍢 ทานเล่น </button>
         <button class="tab-btn" onclick="openMenu(event, 'donburi')">🍚 ดงบุริ </button>
-        <button class="tab-btn" onclick="openMenu(event, 'soup')">🥣 น้ำซุป  </button>
-        <button class="tab-btn" onclick="openMenu(event, 'UdonRamen')">🍜 อุด้ง / ราเมง </button>
+        <button class="tab-btn" onclick="openMenu(event, 'soup')">🥣 ซุป  </button>
+        <button class="tab-btn" onclick="openMenu(event, 'UdonRamen')">🍜 อุด้ง/ราเมง </button>
         <button class="tab-btn" onclick="openMenu(event, 'Signature')">👑 ซิกเนเจอร์ </button>
         <button class="tab-btn" onclick="openMenu(event, 'Secret')">🏆 Secret </button>
     </div>
@@ -284,7 +284,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/donburi/don_01.jpg" alt="GyuDon">
+            <img src="img/donburi/don_01.jpg" alt="Gyu Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">ぎゅうどん</div>
@@ -304,7 +304,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/donburi/don_02.jpg" alt="GyuTamagoDon">
+            <img src="img/donburi/don_02.jpg" alt="Gyu Tamago Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">ぎゅうたまごどん</div>
@@ -324,7 +324,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/donburi/don_03.jpg" alt="GyuOnsenDon">
+            <img src="img/donburi/don_03.jpg" alt="Gyu Onsen Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">ぎゅうおんせんどん</div>
@@ -344,7 +344,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/donburi/don_04.jpg" alt="KaraageTamagoDon">
+            <img src="img/donburi/don_04.jpg" alt="Karaage Tamago Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">からあげたまごどん</div>
@@ -364,7 +364,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/donburi/don_05.jpg" alt="KaraageDon">
+            <img src="img/donburi/don_05.jpg" alt="Karaage Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">からあげどん</div>
@@ -384,7 +384,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/donburi/don_06.jpg" alt="OyakoDon">
+            <img src="img/donburi/don_06.jpg" alt="Oyako Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">おやこどん</div>
@@ -404,7 +404,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/donburi/don_07.jpg" alt="ToriDon<">
+            <img src="img/donburi/don_07.jpg" alt="Tori Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">とりどん</div>
@@ -424,7 +424,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/donburi/don_08.jpg" alt="TamagoDon">
+            <img src="img/donburi/don_08.jpg" alt="Tamago Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">たまごどん</div>
@@ -449,7 +449,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/soup/su_01.jpg" alt="MisoShiru">
+            <img src="img/soup/su_01.jpg" alt="Miso Shiru">
             </div>
             <div class="menu-info">
                 <div class="menu-title">みそしる</div>
@@ -470,7 +470,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/soup/su_02.jpg" alt="ChaShiru">
+            <img src="img/soup/su_02.jpg" alt="Cha Shiru">
             </div>
             <div class="menu-info">
                 <div class="menu-title">ちゃしる</div>
@@ -491,7 +491,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/soup/su_03.jpg" alt="OnsenMisoShiru">
+            <img src="img/soup/su_03.jpg" alt="Onsen Miso Shiru">
             </div>
             <div class="menu-info">
                 <div class="menu-title">おんせんみそしる</div>
@@ -512,7 +512,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/soup/su_04.jpg" alt="OnsenChaShiru">
+            <img src="img/soup/su_04.jpg" alt="Onsen Cha Shiru">
             </div>
             <div class="menu-info">
                 <div class="menu-title">おんせんちゃしる</div>
@@ -521,6 +521,50 @@
                 <div class="menu-price">45 บาท</div>
                 <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
             </div>
+        </div>
+
+        <!-- ใบที่ 5: ซุปมิโซะเนื้อ -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card is-sold-out"> <!-- เพื่อ is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/soup/su_05.jpg" alt="Gyu Miso Shiru">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">ぎゅうみそしる</div>
+                <div class="menu-title">กิวมิโซะชิรุ - ซุปมิโซะเนื้อ</div>
+                <div class="menu-detail">Gyu Miso Shiru</div>
+                <div class="menu-price">89 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 6: กิว ออนเซ็น มิโซะชิรุ -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card is-sold-out">
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมจำหน่าย</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/soup/su_06.jpg" alt="Gyu Onsen Miso Shiru">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">ぎゅうおんせんみそしる</div>
+                <div class="menu-title">กิวออนเซ็นมิโซะชิรุ</div>  
+                <div class="menu-title">ซุปมิโซะเนื้อไข่ออนเซ็น</div>                           
+                <div class="menu-detail">Gyu Onsen Miso Shiru</div>
+                <div class="menu-price">99 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+
         </div>
 
     </div>
@@ -538,7 +582,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/udonramen/ur_01.jpg" alt="ToriMisoUdon">
+            <img src="img/udonramen/ur_01.jpg" alt="Tori Miso Udon">
             </div>
             <div class="menu-info">
                 <div class="menu-title">とり味噌うどん</div>
@@ -559,7 +603,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/udonramen/ur_02.jpg" alt="ToriMisoUdon">
+            <img src="img/udonramen/ur_02.jpg" alt="Tori Miso Ramen">
             </div>
             <div class="menu-info">
                 <div class="menu-title">とり味噌ラーメン</div>
@@ -580,7 +624,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/udonramen/ur_03.jpg" alt="GyuMisoUdon">
+            <img src="img/udonramen/ur_03.jpg" alt="Gyu Miso Udon">
             </div>
             <div class="menu-info">
                 <div class="menu-title">牛味噌うどん</div>
@@ -601,7 +645,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/udonramen/ur_04.jpg" alt="GyuMisoRamen">
+            <img src="img/udonramen/ur_04.jpg" alt="Gyu Miso Ramen">
             </div>
             <div class="menu-info">
                 <div class="menu-title">牛味噌ラーメン</div>
@@ -672,7 +716,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/signature/sg_01.jpg" alt="SalmonOnsenDon">
+            <img src="img/signature/sg_01.jpg" alt="Salmon Onsen Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">サーモンおんせんどん</div>
@@ -692,7 +736,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/signature/sg_02.jpg" alt="SalmonTamagoDon">
+            <img src="img/signature/sg_02.jpg" alt="Salmon Tamago Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">サーモンたまごどん</div>
@@ -712,7 +756,7 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/signature/sg_03.jpg" alt="SalmonDon">
+            <img src="img/signature/sg_03.jpg" alt="Salmon Don">
             </div>
             <div class="menu-info">
                 <div class="menu-title">サーモン丼</div>
@@ -733,11 +777,11 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/signature/sg_04.jpg" alt="TGyuMisoUdon">
+            <img src="img/signature/sg_04.jpg" alt="Gyu Miso Udon">
             </div>
             <div class="menu-info">
                 <div class="menu-title">牛味噌うどん</div>
-                <div class="menu-title">กิว มิโซะ อุด้ง</div>
+                <div class="menu-title">กิวมิโซะอุด้ง</div>
                 <div class="menu-detail">Gyu Miso Udon</div>
                 <div class="menu-price">129 บาท</div>
                 <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
@@ -754,33 +798,11 @@
             </div>
 
             <div class="menu-img">
-            <img src="img/signature/sg_05.jpg" alt="GyuMisoRamen">
+            <img src="img/signature/sg_05.jpg" alt="Gyu Miso Ramen">
             </div>
             <div class="menu-info">
                 <div class="menu-title">牛味噌ラーメン</div>
-                <div class="menu-title">กิว มิโซะ ราเมง</div>                           
-                <div class="menu-detail">Gyu Miso Ramen</div>
-                <div class="menu-price">129 บาท</div>
-                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
-            </div>
-
-        </div>
-
-        <!-- ใบที่ 5: กิว มิโซะ ชาสึเกะ -->
-        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
-        <div class="menu-card is-sold-out">
-            
-            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
-            <div class="sold-out-overlay">
-            <div class="sold-out-text">ยังไม่พร้อมจำหน่าย</div>
-            </div>
-
-            <div class="menu-img">
-            <img src="img/signature/sg_06.jpg" alt="GyuMisoRamen">
-            </div>
-            <div class="menu-info">
-                <div class="menu-title">牛味噌ラーメン</div>
-                <div class="menu-title">กิว มิโซะ ชาสึเกะ</div>                           
+                <div class="menu-title">กิวมิโซะราเมง</div>                           
                 <div class="menu-detail">Gyu Miso Ramen</div>
                 <div class="menu-price">129 บาท</div>
                 <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>

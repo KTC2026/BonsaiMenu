@@ -144,6 +144,88 @@
             overflow: hidden;     /* รูปจะโค้งตามมุมกล่องสีเขียว */
         }
 
+        /* สไตล์ปุ่มราคา (ทำเป็นปุ่มกดซ่อนไว้) */
+        .price-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            color: #e74c3c;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: left;
+            display: inline-block;
+            transition: transform 0.1s ease;
+        }
+        
+        /* เอฟเฟกต์ตอนเอาเมาส์ไปชี้ที่ราคา เพื่อให้รู้ว่ากดได้ */
+        .price-btn:hover {
+            transform: scale(1.05);
+            text-decoration: underline;
+        }
+
+        .disclaimer {
+            font-size: 11px;
+            color: #b5b5b5;
+            margin-top: 4px;
+        }
+
+/* ================================================= */
+        /* เพิ่มสไตล์ป้าย "ยังไม่พร้อมจำหน่าย" และระบบดิมสีหน้าจอ */
+        /* ================================================= */
+        
+        /* 1. สไตล์โครงสร้างกล่องการ์ดเมนู (เพิ่มเพื่อรองรับป้ายทับหน้าจอ) */
+        .menu-card {
+            position: relative; /* จำเป็นมาก เพื่อให้ป้ายสีเทาอ้างอิงตำแหน่งได้ถูกต้อง */
+        }
+
+        /* 2. สไตล์ป้ายข้อความสีเทา */
+        .sold-out-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* พื้นหลังดำโปร่งแสงดิมทับการ์ด */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            opacity: 0;           /* เริ่มต้นซ่อนไว้ */
+            visibility: hidden;   /* เริ่มต้นซ่อนไว้ */
+            transition: opacity 0.2s ease, visibility 0.2s ease;
+        }
+
+        /* ตัวกล่องข้อความสีเทาบนป้าย */
+        .sold-out-text {
+            background-color: #4a4a4a; /* สีเทาเข้มแบบสุภาพ */
+            color: #ffffff;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+            border: 1.5px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        /* 3. คำสั่งเปิดระบบ: เมื่อมีการใส่คลาส is-sold-out ให้แสดงผลทันที */
+        .menu-card.is-sold-out .sold-out-overlay {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ปรับภาพและเนื้อหาภายในให้ออกมามืดลงตามต้นฉบับรูปของคุณ */
+        .menu-card.is-sold-out .menu-img,
+        .menu-card.is-sold-out .menu-info {
+            filter: brightness(0.4); 
+            transition: filter 0.2s ease;
+        }
+        
+        /* ยกเลิกเอฟเฟกต์เด้งขึ้นตอนเอาเมาส์มาชี้ สำหรับเมนูที่ปิดจำหน่ายไปแล้ว */
+        .menu-card.is-sold-out:hover {
+            transform: none;
+        }
+
     </style>
 </head>
 <body>
@@ -156,91 +238,596 @@
 
     <!-- ปุ่ม Tab สำหรับเลือกหมวดหมู่ -->
     <div class="tab-container">
-        <button class="tab-btn active" onclick="openMenu(event, 'sushi')">🍣 ซูชิ (Sushi)</button>
-        <button class="tab-btn" onclick="openMenu(event, 'donburi')">🍚 ดงบุริ (Donburi)</button>
+        <button class="tab-btn" onclick="openMenu(event, 'Promotion')">📌 โปรโมชั่น </button>
+        <button class="tab-btn active" onclick="openMenu(event, 'sushi')">🍣 ซูชิ / 🍢 ของทานเล่น </button>
+        <button class="tab-btn" onclick="openMenu(event, 'donburi')">🍚 ดงบุริ </button>
+        <button class="tab-btn" onclick="openMenu(event, 'soup')">🥣 น้ำซุป  </button>
+        <button class="tab-btn" onclick="openMenu(event, 'UdonRamen')">🍜 อุด้ง / ราเมง </button>
+        <button class="tab-btn" onclick="openMenu(event, 'Signature')">👑 ซิกเนเจอร์ </button>
+        <button class="tab-btn" onclick="openMenu(event, 'Secret')">🏆 Secret </button>
     </div>
 
     <!-- โซนเมนูซูชิ -->
     <div id="sushi" class="menu-content active">
-        <div class="menu-card">
-            <div class="menu-img"><img src="img/sushi/sushi_01.png" alt="แซลมอนเบิร์นมาโยชีส"></div>
+
+        <!-- ใบที่ 1: ซูชิ -->
+        <div class="menu-card "> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/sushi/sushi_01.png" alt="Tori Miso Udon">
+            </div>
             <div class="menu-info">
-                <div class="menu-title">Aburi Salmon with Mayo and Cheese</div>
-                <div class="menu-title">炙りサーモンマヨチーズ</div>
-                <div class="menu-detail">แซลมอน เบิร์นมาโยชีส</div>
-                <div class="menu-price">10 บาท</div>
+                <div class="menu-title">寿司</div>
+                <div class="menu-title">ซูชิ</div>
+                <div class="menu-detail">SUSHI</div>
+                <div class="menu-price">ชิ้นละ 10 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
             </div>
         </div>
-        <div class="menu-card">
-            <div class="menu-img"><img src="img/sushi/sushi_02.png" alt="แซลมอนเบิร์นมาโยสไปร์ซี่"></div>
-            <div class="menu-info">
-                <div class="menu-title">Aburi Mayo and Spicy Salmon</div>
-                <div class="menu-title">炙りスパイシーマヨサーモン</div>
-                <div class="menu-detail">แซลมอน เบิร์นมาโยสไปร์ซี่</div>
-                <div class="menu-price">10 บาท</div>
-            </div>
-        </div>
-        <div class="menu-card">
-            <div class="menu-img"><img src="img/sushi/sushi_03.png" alt="แซลมอนเบิร์นมาโยพริกไทยดำ"></div>
-            <div class="menu-info">
-                <div class="menu-title">Aburi Black Pepper Mayo Salmon</div>
-                <div class="menu-title">炙りスパイシーマヨサーモン</div>
-                <div class="menu-detail">แซลมอน เบิร์นมาโยพริกไทยดำ</div>
-                <div class="menu-price">10 บาท</div>
-            </div>
-        </div>
-        <div class="menu-card">
-            <div class="menu-img">รูปภาพซูชิไข่หวาน</div>
-            <div class="menu-info">
-                <div class="menu-title">Tamago Sushi</div>
-                <div class="menu-detail">ซูชิหน้าไข่หวานย่างสูตรดั้งเดิม หอมกลิ่นซุปดาชิ รสกลมกล่อม</div>
-                <div class="menu-price">40 บาท</div>
-            </div>
-        </div>
+
     </div>
 
     <!-- โซนเมนูดงบุริ -->
     <div id="donburi" class="menu-content">
-        <div class="menu-card">
-            <div class="menu-img"><img src="img/donburi/donburi_01.png" alt="ข้าวหน้าไก่เทริยากิ"></div>
-            <div class="menu-info">
-                <div class="menu-title">Tori no Teriyaki-don</div>
-                <div class="menu-title">鳥の照り焼き丼</div>
-                <div class="menu-detail">ข้าวหน้าไก่เทริยากิ สไตร์ญี่ปุ่น</div>
-                <div class="menu-price">69 บาท</div>
-            </div>
-        </div>
 
-        <div class="menu-card">
-            <div class="menu-img"><img src="img/donburi/donburi_02.png" alt="ข้าวหน้าเนื้อ"></div>
+        <!-- ใบที่ 1: กิวด้ง -->
+        <div class="menu-card "> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_01.jpg" alt="GyuDon">
+            </div>
             <div class="menu-info">
-                <div class="menu-title">Gyudon</div>
-                <div class="menu-title">ぎゅうどん</div>                           
-                <div class="menu-detail">ข้าวหน้าเนื้อสไลด์ต้มซอสญี่ปุ่นรสเข้มข้น</div>
+                <div class="menu-title">ぎゅうどん</div>
+                <div class="menu-title">กิวด้ง - ข้าวหน้าเนื้อ</div>
+                <div class="menu-detail">Gyudon</div>
                 <div class="menu-price">79 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
             </div>
         </div>
 
-        <div class="menu-card">
-            <div class="menu-img"><img src="img/donburi/donburi_03.png" alt="ข้าวหน้าไก่กับไข่"></div>
+        <!-- ใบที่ 2: กิวทามาโกะด้ง -->
+        <div class="menu-card "> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_02.jpg" alt="GyuTamagoDon">
+            </div>
             <div class="menu-info">
-                <div class="menu-title">Oyako Don</div>
-                <div class="menu-title">親子丼</div> 
-                <div class="menu-detail">ข้าวหน้าไก่กับไข่ อาหารง่ายๆสไตร์ครอบครัว</div>
-                <div class="menu-price">ุ69 บาท</div>
+                <div class="menu-title">ぎゅうたまごどん</div>
+                <div class="menu-title">กิวทามาโกะด้ง - ข้าวหน้าเนื้อกับไข่</div>
+                <div class="menu-detail">Gyu Tamago Don</div>
+                <div class="menu-price">89 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
             </div>
         </div>
 
-        <div class="menu-card">
-            <div class="menu-img"><img src="img/donburi/donburi_04.png" alt="ข้าวหน้าแกงกะหรี่ญี่ปุ่น ไก่กรอบ"></div>
+        <!-- ใบที่ 3: กิวออนเซ็นด้ง -->
+        <div class="menu-card is-sold-out"> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_03.jpg" alt="GyuOnsenDon">
+            </div>
             <div class="menu-info">
-                <div class="menu-title">Japanese Curry Rice</div>
-                <div class="menu-title">カレーライス</div> 
-                <div class="menu-detail">ข้าวหน้าแกงกะหรี่ญี่ปุ่นแท้ เสริฟคู่กับไก่กรอบๆ หอมอร่อยได้ในจานเดียว</div>
-                <div class="menu-price">ุ79 บาท</div>
+                <div class="menu-title">ぎゅうおんせんどん</div>
+                <div class="menu-title">กิวออนเซ็นด้ง - ข้าวหน้าเนื้อกับไข่ออนเซ็น</div>
+                <div class="menu-detail">Gyu Onsen Don</div>
+                <div class="menu-price">89 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
             </div>
         </div>
 
+        <!-- ใบที่ 4: คาราอาเกะทามาโกะด้ง -->
+        <div class="menu-card "> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_04.jpg" alt="KaraageTamagoDon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">からあげたまごどん</div>
+                <div class="menu-title">คาราอาเกะทามาโกะด้ง - ข้าวหน้าไก่คาราอาเกะกับไข่</div>
+                <div class="menu-detail">Karaage Tamago Don</div>
+                <div class="menu-price">89 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 5: คาราอาเกะด้ง -->
+        <div class="menu-card "> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_05.jpg" alt="KaraageDon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">からあげどん</div>
+                <div class="menu-title">คาราอาเกะด้ง - ข้าวหน้าไก่คาราอาเกะ</div>
+                <div class="menu-detail">Karaage Don</div>
+                <div class="menu-price">79 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 6: โอยาโกะด้ง -->
+        <div class="menu-card "> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_06.jpg" alt="OyakoDon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">おやこどん</div>
+                <div class="menu-title">โอยาโกะด้ง - ข้าวหน้าไก่กับไข่</div>
+                <div class="menu-detail">Oyako Don</div>
+                <div class="menu-price">69 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 7: โทริด้ง -->
+        <div class="menu-card "> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_07.jpg" alt="ToriDon<">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">とりどん</div>
+                <div class="menu-title">โทริด้ง - ข้าวหน้าไก่</div>
+                <div class="menu-detail">Tori Don</div>
+                <div class="menu-price">59 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 8: ทามาโกะด้ง -->
+        <div class="menu-card "> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_08.jpg" alt="TamagoDon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">たまごどん</div>
+                <div class="menu-title">ทามาโกะด้ง - ข้าวหน้าไข่</div>
+                <div class="menu-detail">Tamago Don</div>
+                <div class="menu-price">59 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- โซนเมนูน้ำซุป -->
+    <div id="soup" class="menu-content">
+        <!-- ใบที่ 1: ซุปมิโซะ (ตัวอย่างแบบ: ปิดจำหน่ายชั่วคราว) -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card "> <!-- เพื่อ is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/soup/su_01.jpg" alt="MisoShiru">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">みそしる</div>
+                <div class="menu-title">มิโซะชิรุ</div>
+                <div class="menu-detail">Miso Shiru</div>
+                <div class="menu-price">35 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 2: ซุปชา (ตัวอย่างแบบ: ปิดจำหน่ายชั่วคราว) -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card "> <!-- เพื่อ is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/soup/su_02.jpg" alt="ChaShiru">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">ちゃしる</div>
+                <div class="menu-title">ชาชิรุ</div>
+                <div class="menu-detail">Cha Shiru</div>
+                <div class="menu-price">35 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 3: ซุปมิโซะ+ไข่ออนเซ็น (ตัวอย่างแบบ: ปิดจำหน่ายชั่วคราว) -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card "> <!-- เพื่อ is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/soup/su_03.jpg" alt="OnsenMisoShiru">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">おんせんみそしる</div>
+                <div class="menu-title">ออนเซ็น มิโซะชิรุ</div>
+                <div class="menu-detail">Onsen Miso Shiru</div>
+                <div class="menu-price">45 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 4: ซุปมิโซะ+ไข่ออนเซ็น (ตัวอย่างแบบ: ปิดจำหน่ายชั่วคราว) -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card "> <!-- เพื่อ is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/soup/su_04.jpg" alt="OnsenChaShiru">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">おんせんちゃしる</div>
+                <div class="menu-title">ออนเซ็น ชาชิรุ</div>
+                <div class="menu-detail">Onsen Cha Shiru</div>
+                <div class="menu-price">45 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- โซนเมนูอุด้ง/ราเมง -->
+    <div id="UdonRamen" class="menu-content">
+
+        <!-- ใบที่ 1: โทริ มิโซะ อุด้ง (ตัวอย่างแบบ: ปิดจำหน่ายชั่วคราว) -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card is-sold-out"> <!-- เพื่อ is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/udonramen/ur_01.jpg" alt="ToriMisoUdon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">とり味噌うどん</div>
+                <div class="menu-title">โทริ มิโซะ อุด้ง</div>
+                <div class="menu-detail">Tori Miso Udon</div>
+                <div class="menu-price">89 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 2: โทริ มิโซะ ราเมง (ตัวอย่างแบบ: ปิดจำหน่ายชั่วคราว) -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card is-sold-out">
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/udonramen/ur_02.jpg" alt="ToriMisoUdon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">とり味噌ラーメン</div>
+                <div class="menu-title">โทริ มิโซะ ราเมง</div>                           
+                <div class="menu-detail">Tori Miso Ramen</div>
+                <div class="menu-price">89 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 3: กิว มิโซะ อุด้ง (ตัวอย่างแบบ: ปิดจำหน่ายชั่วคราว) -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card is-sold-out">
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/udonramen/ur_03.jpg" alt="GyuMisoUdon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">牛味噌うどん</div>
+                <div class="menu-title">กิว มิโซะ อุด้ง</div>
+                <div class="menu-detail">Gyu Miso Udon</div>
+                <div class="menu-price">129 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 4: กิว มิโซะ ราเมง (ตัวอย่างแบบ: ปิดจำหน่ายชั่วคราว) -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card is-sold-out">
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/udonramen/ur_04.jpg" alt="GyuMisoRamen">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">牛味噌ラーメン</div>
+                <div class="menu-title">กิว มิโซะ ราเมง</div>                           
+                <div class="menu-detail">Gyu Miso Ramen</div>
+                <div class="menu-price">129 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- โซนเมนูโปรโมชั่น -->
+    <div id="Promotion" class="menu-content">
+
+        <!-- ใบที่ 1: โปรโมชั่นที่ 1 -->
+        <div class="menu-card "> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/promotion/pro_01.jpg" alt="Promotion1">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">โปรโมชั่นซื้อคู่คุ้มกว่า ข้าว + ซุป</div>
+                <div class="menu-title">ข้าวดงบุริหน้าใดก็ได้ + ซุปมิโซะ</div>
+                <div class="menu-detail">Promotion</div>
+                <div class="menu-price">รับส่วนลดทันที 10 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 1: โปรโมชั่นที่ 1 -->
+        <div class="menu-card is-sold-out"> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/promotion/pro_02.jpg" alt="Promotion2">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">โปรโมชั่นซื้อครบ 100 บาท</div>
+                <div class="menu-title">รับคูปองลุ้นสิทธิ์ 1 ใบ</div>
+                <div class="menu-detail">Promotion</div>
+                <div class="menu-price">ลุ้นรับรางวัลทุกๆ วันที่ 4 และ 19 ของทุกเดือน</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- โซนเมนูซิกเนเจอร์ -->
+    <div id="Signature" class="menu-content">
+
+        <!-- ใบที่ 3: กิว มิโซะ อุด้ง (ตัวอย่างแบบ: ปิดจำหน่ายชั่วคราว) -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card is-sold-out">
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมจำหน่าย</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/udonramen/ur_03.jpg" alt="TGyuMisoUdon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">牛味噌うどん</div>
+                <div class="menu-title">กิว มิโซะ อุด้ง</div>
+                <div class="menu-detail">Gyu Miso Udon</div>
+                <div class="menu-price">129 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 4: กิว มิโซะ ราเมง (ตัวอย่างแบบ: ปิดจำหน่ายชั่วคราว) -->
+        <!-- 💡 สังเกต: มีการเติมคลาส is-sold-out ไว้ที่บรรทัดด้านล่างนี้ -->
+        <div class="menu-card is-sold-out">
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+            <div class="sold-out-text">ยังไม่พร้อมจำหน่าย</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/udonramen/ur_04.jpg" alt="GyuMisoRamen">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">牛味噌ラーメン</div>
+                <div class="menu-title">กิว มิโซะ ราเมง</div>                           
+                <div class="menu-detail">Gyu Miso Ramen</div>
+                <div class="menu-price">129 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+
+        </div>
+
+        <!-- ใบที่ 9: มอนสเต็กด้ง -->
+        <div class="menu-card is-sold-out"> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_09.jpg" alt="SalmonDon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">サーモン丼</div>
+                <div class="menu-title">มอนด้ง - ข้าวหน้าแซลมอน</div>
+                <div class="menu-detail">Salmon Don</div>
+                <div class="menu-price">149 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 10: มอนทามาโกะด้ง -->
+        <div class="menu-card is-sold-out"> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_10.jpg" alt="SalmonTamagoDon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">サーモンたまごどん</div>
+                <div class="menu-title">มอนทามาโกะด้ง - ข้าวหน้าแซลมอนกับไข่</div>
+                <div class="menu-detail">Salmon Tamago Don</div>
+                <div class="menu-price">159 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 11: มอนออนเซ็นด้ง -->
+        <div class="menu-card is-sold-out"> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมให้บริการ</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/donburi/don_11.jpg" alt="SalmonOnsenDon">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">サーモンおんせんどん</div>
+                <div class="menu-title">มอนออนเซ็นด้ง - ข้าวหน้าแซลมอนกับไข่ออนเซ็น</div>
+                <div class="menu-detail">Salmon Onsen Don</div>
+                <div class="menu-price">159 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- โซนเมนูลับเฉพาะ -->
+    <div id="Secret" class="menu-content">
+
+        <!-- ใบที่ 1: เมนูลับเฉพาะ 1 -->
+        <div class="menu-card is-sold-out"> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมจำหน่าย</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/secret/sc_01.jpg" alt="">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">มอนออนเซ็นมิโซะอุด้ง</div>
+                <div class="menu-detail">เฉพาะผู้โชคดีได้รับรางวัลเท่านั้น</div>
+                <div class="menu-price">มูลค่า 259 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 2: เมนูลับเฉพาะ 1 -->
+        <div class="menu-card is-sold-out"> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมจำหน่าย</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/secret/sc_02.jpg" alt="">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">มอนออนเซ็นมิโซะราเมง</div>
+                <div class="menu-detail">เฉพาะผู้โชคดีได้รับรางวัลเท่านั้น</div>
+                <div class="menu-price">มูลค่า 259 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+
+        <!-- ใบที่ 3: เมนูลับเฉพาะ 1 -->
+        <div class="menu-card is-sold-out"> <!-- เพิ่ม is-sold-out เมื่อต้องการแสดงป้าย-->
+            
+            <!-- แทรกกล่องป้ายเตือนไว้บรรทัดแรกสุดด้านในการ์ด -->
+            <div class="sold-out-overlay">
+                <div class="sold-out-text">ยังไม่พร้อมจำหน่าย</div>
+            </div>
+
+            <div class="menu-img">
+            <img src="img/secret/sc_03.jpg" alt="">
+            </div>
+            <div class="menu-info">
+                <div class="menu-title">มอนออนเซ็นมิโซะชาสึเกะ</div>
+                <div class="menu-detail">เฉพาะผู้โชคดีได้รับรางวัลเท่านั้น</div>
+                <div class="menu-price">มูลค่า 259 บาท</div>
+                <div class="disclaimer">รูปภาพใช้เพื่อโฆษณาเท่านั้น</div>
+            </div>
+        </div>
+        
     </div>
 
     <!-- สคริปต์ JavaScript สำหรับสลับหน้า Tab -->
